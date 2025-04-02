@@ -16,3 +16,10 @@ test('shows "start game" button', () => {
 
   expect(startButton).toBeDisabled(); // check if button disappears
 })
+
+test('gameArea is visible', () => {
+  render(<Game />);
+  const gameArea = screen.getByTestId("gameArea");
+
+  expect(gameArea).toBeInTheDocument();
+})
