@@ -23,3 +23,13 @@ test('gameArea is visible', () => {
 
   expect(gameArea).toBeInTheDocument();
 })
+
+test('when game is running, make a seconds count visible', () => {
+  render(<Game />);
+  // start the game
+  const startButton = screen.getByText(/start game/i);
+  fireEvent.click(startButton);
+  // look for "sec"
+  const seconds = screen.getByText("sec");
+  expect(seconds).toBeVisible();
+})

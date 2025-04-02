@@ -9,8 +9,9 @@ function Game () {
     return (
         <>
             <button disabled={gameActive} onClick={toggleGame}>Start Game</button>
+            {gameActive ? <span>sec</span> : <></>}
             <div style={{borderStyle: "solid", borderWidth: "5px", borderColor:"#101010", height:"50vh", width:"50vw"}} data-testid="gameArea">
-                
+
             </div>
         </>
     )
