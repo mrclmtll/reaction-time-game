@@ -43,3 +43,15 @@ test('when game started, make the target button visible', () => {
   const targetButton = screen.getByTestId("target");
   expect(targetButton).toBeVisible();
 })
+
+test('when ending game, make start button clickable', () => {
+  render(<Game />);
+  // start the game
+  const startButton = screen.getByText("Start Game");
+  fireEvent.click(startButton);
+  // end the game
+  const targetButton = screen.getByTestId("target");
+  fireEvent.click(targetButton);
+
+  expect(startButton).not.toBeDisabled();
+})
