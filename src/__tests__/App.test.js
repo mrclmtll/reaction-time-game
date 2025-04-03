@@ -30,6 +30,6 @@ test('when game is running, make a seconds count visible', () => {
   const startButton = screen.getByText(/start game/i);
   fireEvent.click(startButton);
   // look for "sec"
-  const seconds = screen.getByText("sec");
+  const seconds = screen.getByText("0sec");
   expect(seconds).toBeVisible();
 })
