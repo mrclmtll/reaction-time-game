@@ -33,3 +33,13 @@ test('when game is running, make a seconds count visible', () => {
   const seconds = screen.getByText("0sec");
   expect(seconds).toBeVisible();
 })
+
+test('when game started, make the target button visible', () => {
+  render(<Game />);
+  // start the game
+  const startButton = screen.getByText(/start game/i);
+  fireEvent.click(startButton);
+
+  const targetButton = screen.getByTestId("target");
+  expect(targetButton).toBeVisible();
+})
