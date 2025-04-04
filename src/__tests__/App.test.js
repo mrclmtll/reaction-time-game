@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from '../App';
 import Game from '../Game';
@@ -54,4 +54,65 @@ test('when ending game, make start button clickable', () => {
   fireEvent.click(targetButton);
 
   expect(startButton).not.toBeDisabled();
+})
+
+test('measures reaction time using setInterval', async () => {
+  jest.useFakeTimers(); // activate fake timer
+
+  render(<Game />);
+
+  const startButton = screen.getByText("Start Game");
+  fireEvent.click(startButton); // start game
+
+  const targetButton = screen.getByTestId("target");
+
+  // simulate time passing
+  act(() => {
+    jest.advanceTimersByTime(2000); // advance time by 2secs
+  });
+
+  fireEvent.click(targetButton); // end game
+
+  const timerText = screen.getByText(/sec/i).textContent;
+  const seconds = parseFloat(timerText);
+
+  expect(seconds).toBeGreaterThanOrEqual(2);
+  expect(seconds).toBeLessThan(2.5);
+
+  jest.useRealTimers(); // reset fake timer
+});
+
+test('try more games in a row', async () => {
+  jest.useFakeTimers(); // activate fake timer
+
+  render(<Game />);
+
+  const startButton = screen.getByText("Start Game");
+  fireEvent.click(startButton); // start game
+
+  const targetButton = screen.getByTestId("target");
+
+
+  fireEvent.click(targetButton); // end game
+
+
+
+  // 2nd game
+
+  fireEvent.click(startButton); // start 2nd game
+
+  // simulate time passing
+  act(() => {
+    jest.advanceTimersByTime(2000); // advance time by 2secs
+  });
+
+  fireEvent.click(targetButton); // end game
+
+  const timerText = screen.getByText(/sec/i).textContent;
+  const seconds = parseFloat(timerText);
+
+  expect(seconds).toBeGreaterThanOrEqual(2);
+  expect(seconds).toBeLessThan(2.5);
+
+  jest.useRealTimers(); // reset fake timer
 })
