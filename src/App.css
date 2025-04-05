@@ -4,10 +4,12 @@
   border-color: #101010;
   height: 50vh;
   width: 50vw;
+  padding: 5vw;
 }
 
 .target-button {
   border-radius: 100%;
+  position: relative;
   height: 5vw;
   width: 5vw;
 }

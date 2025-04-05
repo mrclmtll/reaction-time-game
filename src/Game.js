@@ -2,26 +2,44 @@ import { useEffect, useRef, useState } from "react"
 
 function Game () {
 
-    const [gameActive, setGameActive] = useState(false);
-    const [gameEnded, setGameEnded]   = useState(true);
-    const [passedTime, setPassedTime] = useState(0);
-    const intervalRef = useRef(null)
+    const [gameActive, setGameActive]       = useState(false);
+    const [gameEnded, setGameEnded]         = useState(true);
+    const [passedTime, setPassedTime]       = useState(0);
+    const [targetVisible, setTargetVisible] = useState(false);
+    const intervalRef                       = useRef(null)
+    const targetButton                      = useRef(null)
 
 
-    function startGame() {
-        setPassedTime(0) // reset timer
+    async function startGame() {
+        setTargetVisible(false)
+        let delay = Math.random() * 4 * 1000 // random delay between 0 and 4 seconds (0 and 4000 ms)
         setGameActive(true)
         setGameEnded(false)
+        setPassedTime(0) // reset timer
+
+        await new Promise(r => setTimeout(r, delay)) // wait delay seconds
+
+        setTargetVisible(true)
+
 
     }
+
     function endGame() {
         setGameEnded(true)
         clearInterval(intervalRef.current)
     }
 
+    useEffect(() => {
+        if (targetButton.current && !gameEnded) {
+            let top = Math.random() * 100
+            let left = Math.random() * 100
+            targetButton.current.style.top = `${top}%`
+            targetButton.current.style.left = `${left}%`
+        }
+    }, [gameActive, gameEnded]);
 
     useEffect(() => {
-        if (!gameEnded) {
+        if (!gameEnded && targetVisible) {
             intervalRef.current = setInterval(() => {
                 setPassedTime(
                     prev => 
@@ -32,7 +50,7 @@ function Game () {
         return () => {
             clearInterval(intervalRef.current)
         };
-    }, [gameEnded]);
+    }, [gameEnded, targetVisible]);
 
     return (
         <>
@@ -51,8 +69,9 @@ function Game () {
                 data-testid="gameArea"
             >
                 {
-                    gameActive &&
+                    targetVisible &&
                         <button 
+                            ref={targetButton}
                             data-testid="target" 
                             onClick={endGame} 
                             className="target-button"
