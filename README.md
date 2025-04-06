@@ -9,8 +9,8 @@ To really understand the concept and internalize it, I will follow a **Test-Driv
 "Reaction Time Game" measures how fast you can click a randomly appearing button - pretty easy, but it's the first game, so I will start slowly 😅
 
 ## ⚙️ Features
-- Random button appearance (planned)
-- Reaction time measurement (planned)
+- Random button appearance
+- Reaction time measurement
 - Sound effects (planned)
 - Highscore tracking (planned)
 - Mobile version (planned)
