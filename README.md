@@ -20,7 +20,6 @@ To really understand the concept and internalize it, I will follow a **Test-Driv
 - HTML
 - CSS
 - React (since I want to learn it starting in this project)
-- Tailwind (since I haven't used it yet)
 - (TDD - I want to learn the concept)
 
 ## 🚀 Installation & Usage
