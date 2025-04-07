@@ -13,3 +13,42 @@
   height: 5vw;
   width: 5vw;
 }
+
+.start-button {
+  border-radius: 10px;
+  border-width: 0.1vh;
+  border-style: solid;
+  height: 5vh;
+  width: 20vh;
+  font-size: 2vh;
+  background-color: #ffff;
+  color: #191919;
+  box-shadow: 0 0 0.5vh black;
+}
+
+.start-button:hover {
+  height: 5.2vh;
+  width: 20.2vh;
+  
+  border-style: solid;
+  border-color: aqua;
+  box-shadow: 0 0 0.5vh rgb(3, 129, 129);
+}
+
+.start-button-dark {
+  border-radius: 10px;
+  height: 5vh;
+  width: 20vh;
+  font-size: 2vh;
+  background-color: #1f1f1f;
+  color: #a7a7a7
+}
+
+/* border-radius: 10px;
+border-width: 0.1vh;
+height: 5vh;
+width: 20vh;
+font-size: 2vh;
+background-color: #ffff;
+color: #191919;
+box-shadow: 0 0 0.5vh black; */
