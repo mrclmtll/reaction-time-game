@@ -55,6 +55,7 @@ function Game () {
     return (
         <>
             <button
+                className="start-button poppins-light"
                 disabled={!gameEnded} 
                 onClick={startGame}
             >
