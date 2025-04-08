@@ -38,10 +38,23 @@ p {
 .start-button:hover {
   height: 5.2vh;
   width: 20.2vh;
+  color: rgb(3, 129, 129);
   
   border-style: solid;
   border-color: aqua;
   box-shadow: 0 0 0.5vh rgb(3, 129, 129);
+}
+
+.start-button:disabled {
+  color: #1919193f
+}
+
+.start-button:disabled:hover {
+  height: 5vh;
+  width: 20vh;
+
+  border-style: none;
+  box-shadow: 0 0 0.5vh black;
 }
 
 .start-button-dark {
