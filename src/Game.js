@@ -63,7 +63,7 @@ function Game () {
             </button>
             {
                 gameActive &&
-                    <span>{passedTime}sec</span> 
+                    <span className="poppins-light">{passedTime}sec</span> 
             }
             <div 
                 className = "game-area"
