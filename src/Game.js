@@ -36,7 +36,7 @@ function Game () {
             targetButton.current.style.top = `${top}%`
             targetButton.current.style.left = `${left}%`
         }
-    }, [gameActive, gameEnded]);
+    }, [gameEnded, targetVisible]);
 
     useEffect(() => {
         if (!gameEnded && targetVisible) {
