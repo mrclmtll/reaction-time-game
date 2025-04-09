@@ -65,7 +65,7 @@ test('when ending game, make start button clickable', async () => {
   jest.useRealTimers()
 })
 
-test('measures reaction time using setInterval', async () => {
+test('measures reaction time', async () => {
   jest.useFakeTimers(); // activate fake timer
 
   render(<Game />);
@@ -136,3 +136,40 @@ test('try more games in a row', async () => {
 
   jest.useRealTimers(); // reset fake timer
 })
+
+test('measures reaction time with 2 missclicks', async () => {
+  jest.useFakeTimers(); // activate fake timer
+
+  render(<Game />);
+
+  const startButton = screen.getByText("Start Game");
+  fireEvent.click(startButton); // start game
+
+
+  // get gamearea to be able to simulate missclicks
+  const gameArea = await screen.findByTestId("gameArea")
+
+  await waitFor(() => {
+    expect(screen.getByTestId("target")).toBeInTheDocument();
+  }, { timeout: 5000 });
+  const targetButton = await screen.findByTestId("target");
+
+  // simulate time passing
+  act(() => {
+    jest.advanceTimersByTime(2000); // advance time by 2secs
+  });
+
+  // simulate 2 missclicks
+  fireEvent.click(gameArea)
+  fireEvent.click(gameArea)
+
+  fireEvent.click(targetButton); // end game
+
+  const timerText = screen.getByText(/sec/i).textContent;
+  const seconds = parseFloat(timerText);
+
+  expect(seconds).toBeGreaterThanOrEqual(3);
+  expect(seconds).toBeLessThan(3.5);
+
+  jest.useRealTimers(); // reset fake timer
+});
