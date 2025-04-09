@@ -24,9 +24,20 @@ function Game () {
 
     }
 
-    function endGame() {
+    function endGame(event) {
+        // when button was clicked, do not trigger missclick function
+        event.stopPropagation()
+
         setGameEnded(true)
         clearInterval(intervalRef.current)
+    }
+
+    function registerMissClick() {
+        if (!gameEnded) {
+
+            setPassedTime(prev => prev + 0.5)
+        }
+        
     }
 
     useEffect(() => {
@@ -68,6 +79,7 @@ function Game () {
             <div 
                 className = "game-area"
                 data-testid="gameArea"
+                onClick={registerMissClick}
             >
                 {
                     targetVisible &&
