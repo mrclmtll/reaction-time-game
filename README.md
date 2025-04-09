@@ -11,7 +11,7 @@ To really understand the concept and internalize it, I will follow a **Test-Driv
 ## ⚙️ Features
 - Random button appearance
 - Reaction time measurement
-- Adding time for missclicks (planned)
+- Adding 0.5sec for missclicks as kind of penalty
 - Sound effects (planned)
 - Highscore tracking (planned)
 - Mobile version (planned)
