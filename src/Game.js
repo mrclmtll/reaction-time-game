@@ -111,7 +111,7 @@ function Game () {
                 {
                     missClickNotify &&
                         <span 
-                            className="poppins-light"
+                            className="poppins-light missclick-notify"
                             style={{
                                 position: "absolute",
                                 left: mousePosition.x,

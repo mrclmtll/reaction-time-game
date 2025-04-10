@@ -88,3 +88,24 @@ font-size: 2vh;
 background-color: #ffff;
 color: #191919;
 box-shadow: 0 0 0.5vh black; */
+
+@keyframes flyUpAndFade {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 30% {
+    
+    transform: translateY(-2.5vw);
+  } */
+
+  100% {
+    opacity: 0;
+    transform: translateY(-5vw);
+  }
+}
+
+.missclick-notify {
+  animation: flyUpAndFade 1s cubic-bezier(0.19, 0.5, 0.22, 1) forwards;
+}
