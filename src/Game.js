@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react"
 
 function Game () {
 
-    const [gameActive, setGameActive]       = useState(false);
-    const [gameEnded, setGameEnded]         = useState(true);
-    const [passedTime, setPassedTime]       = useState(0);
-    const [targetVisible, setTargetVisible] = useState(false);
-    const intervalRef                       = useRef(null)
-    const targetButton                      = useRef(null)
+    const [gameActive, setGameActive]           = useState(false);
+    const [gameEnded, setGameEnded]             = useState(true);
+    const [passedTime, setPassedTime]           = useState(0);
+    const [targetVisible, setTargetVisible]     = useState(false);
+    const [missClickNotify, setMissClickNotify] = useState(false);
+    const [mousePosition, setMousePosition]     = useState({ x: 0, y:0 })
+    const intervalRef                           = useRef(null)
+    const targetButton                          = useRef(null)
 
 
     async function startGame() {
@@ -32,13 +34,24 @@ function Game () {
         clearInterval(intervalRef.current)
     }
 
-    function registerMissClick() {
+    function registerMissClick(e) {
         if (!gameEnded) {
-
             setPassedTime(prev => prev + 0.5)
+            setMousePosition({ x: e.clientX, y: e.clientY })
+            // first set to false and then reset, so it can appear even if the timer did not reset
+            setMissClickNotify(false)
+            setMissClickNotify(true)
         }
         
     }
+
+    useEffect(() => {
+        if (missClickNotify) {
+            setTimeout(() => {
+                setMissClickNotify(false)
+            }, 1000);
+        }
+    }, [missClickNotify])
 
     useEffect(() => {
         if (targetButton.current && !gameEnded) {
@@ -74,7 +87,12 @@ function Game () {
             </button>
             {
                 gameActive &&
-                    <span className="poppins-light">{passedTime}sec</span> 
+                    <span 
+                        className="poppins-light"
+                        data-testid="timer"
+                    >
+                        {passedTime}sec
+                    </span> 
             }
             <div 
                 className = "game-area"
@@ -89,6 +107,20 @@ function Game () {
                             onClick={endGame} 
                             className="target-button"
                         ></button> 
+                }
+                {
+                    missClickNotify &&
+                        <span 
+                            className="poppins-light"
+                            style={{
+                                position: "absolute",
+                                left: mousePosition.x,
+                                top: mousePosition.y,
+                                color: "red"
+                            }}
+                        >
+                            +0.5sec
+                        </span>
                 }
             </div>
         </>

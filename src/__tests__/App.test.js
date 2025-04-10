@@ -90,7 +90,7 @@ test('measures reaction time', async () => {
 
   fireEvent.click(targetButton); // end game
 
-  const timerText = screen.getByText(/sec/i).textContent;
+  const timerText = screen.getByTestId("timer").textContent;
   const seconds = parseFloat(timerText);
 
   expect(seconds).toBeGreaterThanOrEqual(2);
@@ -128,7 +128,7 @@ test('try more games in a row', async () => {
 
   fireEvent.click(targetButton); // end game
 
-  const timerText = screen.getByText(/sec/i).textContent;
+  const timerText = screen.getByTestId("timer").textContent;
   const seconds = parseFloat(timerText);
 
   expect(seconds).toBeGreaterThanOrEqual(2);
@@ -165,11 +165,35 @@ test('measures reaction time with 2 missclicks', async () => {
 
   fireEvent.click(targetButton); // end game
 
-  const timerText = screen.getByText(/sec/i).textContent;
+  const timerText = screen.getByTestId("timer").textContent;
   const seconds = parseFloat(timerText);
 
   expect(seconds).toBeGreaterThanOrEqual(3);
   expect(seconds).toBeLessThan(3.5);
 
   jest.useRealTimers(); // reset fake timer
+});
+
+test('missclick text is visible', async () => {
+  
+  render(<Game />);
+
+  const startButton = screen.getByText("Start Game");
+  fireEvent.click(startButton); // start game
+
+
+  // get gamearea to be able to simulate missclicks
+  const gameArea = await screen.findByTestId("gameArea")
+
+  await waitFor(() => {
+    expect(screen.getByTestId("target")).toBeInTheDocument();
+  }, { timeout: 5000 });
+
+
+  // simulate missclick
+  fireEvent.click(gameArea)
+
+  const missClickText = await screen.findByText("+0.5sec")
+
+  expect(missClickText).toBeVisible()
 });
