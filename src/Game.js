@@ -8,8 +8,10 @@ function Game () {
     const [targetVisible, setTargetVisible]     = useState(false);
     const [missClickNotify, setMissClickNotify] = useState(false);
     const [mousePosition, setMousePosition]     = useState({ x: 0, y:0 })
-    const intervalRef                           = useRef(null)
-    const targetButton                          = useRef(null)
+
+    const intervalRef        = useRef(null)
+    const targetButton       = useRef(null)
+    const gameStartTimeStamp = useRef(0)
 
 
     async function startGame() {
@@ -23,6 +25,8 @@ function Game () {
 
         setTargetVisible(true)
 
+        var date = new Date()
+        gameStartTimeStamp.current = date.getTime()  
 
     }
 
@@ -30,6 +34,10 @@ function Game () {
         // when button was clicked, do not trigger missclick function
         event.stopPropagation()
 
+        var date = new Date()
+        var reactionTimeInMs = (date.getTime() - gameStartTimeStamp.current) / 1000
+        setPassedTime(reactionTimeInMs)
+        
         setGameEnded(true)
         clearInterval(intervalRef.current)
     }
@@ -37,6 +45,9 @@ function Game () {
     function registerMissClick(e) {
         if (!gameEnded) {
             setPassedTime(prev => prev + 0.5)
+            // set the start timestamp to 500ms earlier -> reaction time +500ms
+            gameStartTimeStamp.current -= 500
+
             setMousePosition({ x: e.clientX, y: e.clientY })
             // first set to false and then reset, so it can appear even if the timer did not reset
             setMissClickNotify(false)
