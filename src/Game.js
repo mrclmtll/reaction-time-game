@@ -99,7 +99,7 @@ function Game () {
             {
                 gameActive &&
                     <span 
-                        className="poppins-light"
+                        className="poppins-light timer"
                         data-testid="timer"
                     >
                         {passedTime}sec

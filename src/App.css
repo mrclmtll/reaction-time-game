@@ -1,9 +1,15 @@
 h1 {
-  padding: 0 0 0 1vw
+  padding: 0 0 0 1vw;
+  font-size: 4.3vh;
 }
 
 p {
-  padding: 0 0 0 1vw
+  padding: 0 0 0 1vw;
+  font-size: 2.5vh;
+}
+
+.timer {
+  font-size: 2.1vh;
 }
 
 .game-area {
@@ -41,17 +47,18 @@ p {
   border-width: 0.1vh;
   border-style: solid;
   height: 5vh;
-  width: 20vh;
+  width: 10vw;
   font-size: 2vh;
   background-color: #ffff;
   color: #191919;
+  font-size: 2vh;
   box-shadow: 0 0 0.5vh black;
   margin: 1vw 2vw 1vw 1.5vw
 }
 
 .start-button:hover {
   height: 5.2vh;
-  width: 20.2vh;
+  width: 10.4vw;
   color: rgb(3, 129, 129);
   
   border-style: solid;
