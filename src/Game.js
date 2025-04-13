@@ -36,6 +36,8 @@ function Game () {
         // when button was clicked, do not trigger missclick function
         event.stopPropagation()
 
+        playSound('success')
+
         var date = new Date()
         var reactionTimeInMs = (date.getTime() - gameStartTimeStamp.current) / 1000
         var timeWithPenalties = reactionTimeInMs + (missClickCount.current * 0.5)
@@ -47,6 +49,7 @@ function Game () {
 
     function registerMissClick(e) {
         if (!gameEnded) {
+            playSound('missclick')
             setPassedTime(prev => prev + 0.5)
             missClickCount.current += 1
 
@@ -56,6 +59,11 @@ function Game () {
             setMissClickNotify(true)
         }
         
+    }
+
+    function playSound(soundName) {
+        const audio = new Audio(`/sounds/${soundName}.mp3`)
+        audio.play()
     }
 
     useEffect(() => {
