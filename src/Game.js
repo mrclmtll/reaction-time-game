@@ -12,6 +12,7 @@ function Game () {
     const intervalRef        = useRef(null)
     const targetButton       = useRef(null)
     const gameStartTimeStamp = useRef(0)
+    const missClickCount     = useRef(0)
 
 
     async function startGame() {
@@ -20,6 +21,7 @@ function Game () {
         setGameActive(true)
         setGameEnded(false)
         setPassedTime(0) // reset timer
+        missClickCount.current = 0
 
         await new Promise(r => setTimeout(r, delay)) // wait delay seconds
 
@@ -36,7 +38,8 @@ function Game () {
 
         var date = new Date()
         var reactionTimeInMs = (date.getTime() - gameStartTimeStamp.current) / 1000
-        setPassedTime(reactionTimeInMs)
+        var timeWithPenalties = reactionTimeInMs + (missClickCount.current * 0.5)
+        setPassedTime(timeWithPenalties)
         
         setGameEnded(true)
         clearInterval(intervalRef.current)
@@ -45,8 +48,7 @@ function Game () {
     function registerMissClick(e) {
         if (!gameEnded) {
             setPassedTime(prev => prev + 0.5)
-            // set the start timestamp to 500ms earlier -> reaction time +500ms
-            gameStartTimeStamp.current -= 500
+            missClickCount.current += 1
 
             setMousePosition({ x: e.clientX, y: e.clientY })
             // first set to false and then reset, so it can appear even if the timer did not reset
