@@ -18,8 +18,10 @@ const Highscore = mongoose.model("Highscore", HighscoreSchema)
 
 app.post("/api/highscores", async (req, res) => {
     const { name, time } = req.body;
-    const newScore = new Highscore({ name, time });
+    const newScore = new Highscore({ name, reaction_time: time });
     await newScore.save();
+    console.log("saved highscore", newScore);
+    
     res.status(201).send(newScore);
 });
 

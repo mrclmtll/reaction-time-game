@@ -45,6 +45,27 @@ function Game () {
         
         setGameEnded(true)
         clearInterval(intervalRef.current)
+        saveHighscore("Name", timeWithPenalties)
+
+    }
+
+    async function saveHighscore(name, score) {
+        try {
+           const response = await fetch("http://localhost:4000/api/highscores", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: name, time: score }),
+           })
+
+           const data = await response.json();
+           console.log("✅ Saved highscore: ", data);
+           
+
+        } catch (error) {
+            console.error("Error saving highscore")
+        }
     }
 
     function registerMissClick(e) {

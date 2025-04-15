@@ -28,3 +28,8 @@ To really understand the concept and internalize it, I will follow a **Test-Driv
     ```sh 
     npm start
     ```
+
+2. Start the backend (in ./backend)
+    ```sh
+    node index.js
+    ```
