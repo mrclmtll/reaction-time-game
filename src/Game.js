@@ -8,6 +8,7 @@ function Game () {
     const [targetVisible, setTargetVisible]     = useState(false);
     const [missClickNotify, setMissClickNotify] = useState(false);
     const [mousePosition, setMousePosition]     = useState({ x: 0, y:0 })
+    const [highscores, setHighscores]           = useState([])
 
     const intervalRef        = useRef(null)
     const targetButton       = useRef(null)
@@ -32,7 +33,7 @@ function Game () {
 
     }
 
-    function endGame(event) {
+    async function endGame(event) {
         // when button was clicked, do not trigger missclick function
         event.stopPropagation()
 
@@ -46,6 +47,9 @@ function Game () {
         setGameEnded(true)
         clearInterval(intervalRef.current)
         saveHighscore("Name", timeWithPenalties)
+
+        let _highScores = await getHighscores()
+        setHighscores(_highScores)
 
     }
 
@@ -68,6 +72,20 @@ function Game () {
         }
     }
 
+    async function getHighscores() {
+        try {
+                const response = await fetch("http://localhost:4000/api/highscores", {
+                    method: 'GET'
+                })
+                const data = await response.json()
+                return data
+                
+        } catch (error) {
+            console.log("Error fetching highscores");
+            return []
+        }
+    }
+
     function registerMissClick(e) {
         if (!gameEnded) {
             playSound('missclick')
@@ -86,6 +104,16 @@ function Game () {
         const audio = new Audio(`/sounds/${soundName}.mp3`)
         audio.play()
     }
+
+    // run on mount
+    useEffect(() => {
+        async function _setHighscores() {
+            let _highScores = await getHighscores()
+            setHighscores(_highScores)
+        }
+        _setHighscores()
+        
+    }, [])
 
     useEffect(() => {
         if (missClickNotify) {
