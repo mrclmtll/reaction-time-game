@@ -193,6 +193,18 @@ function Game () {
                         </span>
                 }
             </div>
+            <div>
+                {
+                    highscores.map((element) => {
+                        return(
+                            <div>
+                                <span>{element.name}</span>
+                                <span>{element.reaction_time}</span>
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </>
     )
 }
