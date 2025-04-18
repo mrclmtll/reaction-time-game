@@ -26,7 +26,7 @@ app.post("/api/highscores", async (req, res) => {
 });
 
 app.get("/api/highscores", async (req, res) => {
-    const scores = await Highscore.find().sort({ time: 1 }).limit(10);
+    const scores = await Highscore.find().sort({ reaction_time: 1 }).limit(10);
     res.send(scores);
 });
 
