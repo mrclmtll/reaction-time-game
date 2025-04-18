@@ -193,18 +193,27 @@ function Game () {
                         </span>
                 }
             </div>
-            <div>
-                {
-                    highscores.map((element) => {
-                        return(
-                            <div>
-                                <span>{element.name}</span>
-                                <span>{element.reaction_time}</span>
-                            </div>
-                        )
-                    })
-                }
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        highscores.map((element) => {
+                            return(
+                                <tr key={element._id}>
+                                    <td>{element.name}</td>
+                                    <td>{element.reaction_time}</td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+                
+            </table>
         </>
     )
 }
