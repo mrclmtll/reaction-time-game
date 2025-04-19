@@ -164,56 +164,61 @@ function Game () {
                         {passedTime}sec
                     </span> 
             }
-            <div 
-                className = "game-area"
-                data-testid="gameArea"
-                onClick={registerMissClick}
-            >
-                {
-                    targetVisible &&
-                        <button 
-                            ref={targetButton}
-                            data-testid="target" 
-                            onClick={endGame} 
-                            className="target-button"
-                        ></button> 
-                }
-                {
-                    missClickNotify &&
-                        <span 
-                            className="poppins-light missclick-notify"
-                            style={{
-                                position: "absolute",
-                                left: mousePosition.x,
-                                top: mousePosition.y,
-                                color: "red"
-                            }}
-                        >
-                            +0.5sec
-                        </span>
-                }
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div className="flex-box">
+                <div 
+                    className = "game-area"
+                    data-testid="gameArea"
+                    onClick={registerMissClick}
+                >
                     {
-                        highscores.map((element) => {
-                            return(
-                                <tr key={element._id}>
-                                    <td>{element.name}</td>
-                                    <td>{element.reaction_time}</td>
-                                </tr>
-                            )
-                        })
+                        targetVisible &&
+                            <button 
+                                ref={targetButton}
+                                data-testid="target" 
+                                onClick={endGame} 
+                                className="target-button"
+                            ></button> 
                     }
-                </tbody>
-                
-            </table>
+                    {
+                        missClickNotify &&
+                            <span 
+                                className="poppins-light missclick-notify"
+                                style={{
+                                    position: "absolute",
+                                    left: mousePosition.x,
+                                    top: mousePosition.y,
+                                    color: "red"
+                                }}
+                            >
+                                +0.5sec
+                            </span>
+                    }
+                </div>
+                <div>
+                    <p className="highscore-heading poppins-extralight">Highscores</p>
+                    <table className="highscore-table poppins-extralight">
+                        <thead>
+                            <tr>
+                                <th className="table-padding">Name</th>
+                                <th className="table-padding">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                highscores.map((element) => {
+                                    return(
+                                        <tr key={element._id}>
+                                            <td className="table-padding">{element.name}</td>
+                                            <td className="table-padding">{element.reaction_time}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
         </>
     )
 }

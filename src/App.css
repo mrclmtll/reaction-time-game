@@ -116,3 +116,25 @@ box-shadow: 0 0 0.5vh black; */
 .missclick-notify {
   animation: flyUpAndFade 1s cubic-bezier(0.19, 0.5, 0.22, 1) forwards;
 }
+
+
+.flex-box{
+  display: flex;
+  gap: 2vw;
+  align-items: flex-start;
+}
+
+.highscore-table {
+  border-style: solid;
+  border-width: 0.3vh;
+  border-radius: 10px;
+  border-color: #101010;
+}
+
+.table-padding {
+  padding: 0 2vw;
+}
+
+.highscore-heading {
+  margin: 0 0 2vh;
+}
