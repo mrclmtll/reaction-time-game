@@ -156,7 +156,7 @@ function Game () {
                 >
                     Start Game
                 </button>
-                <input className="poppins-regular name-input" placeholder="Name"></input>
+                <input className="poppins-regular name-input" placeholder="Input name"></input>
             </div>
             {
                 gameActive &&
