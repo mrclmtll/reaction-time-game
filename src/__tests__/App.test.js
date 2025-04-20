@@ -1,7 +1,13 @@
-import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import App from '../App';
-import Game from '../Game';
+import {
+  render,
+  screen,
+  fireEvent,
+  act,
+  waitFor,
+} from "@testing-library/react";
+import "@testing-library/jest-dom";
+import App from "../App";
+import Game from "../Game";
 
 test('shows title "Reaction Time Game', () => {
   render(<App />);
@@ -15,16 +21,16 @@ test('"start game" button gets disabled', () => {
   fireEvent.click(startButton); // click start-button
 
   expect(startButton).toBeDisabled(); // check if button gets disabled
-})
+});
 
-test('gameArea is visible', () => {
+test("gameArea is visible", () => {
   render(<Game />);
   const gameArea = screen.getByTestId("gameArea");
 
   expect(gameArea).toBeInTheDocument();
-})
+});
 
-test('when game is running, make a seconds count visible', () => {
+test("when game is running, make a seconds count visible", () => {
   render(<Game />);
   // start the game
   const startButton = screen.getByText(/start game/i);
@@ -32,40 +38,46 @@ test('when game is running, make a seconds count visible', () => {
   // look for "sec"
   const seconds = screen.getByText("0sec");
   expect(seconds).toBeVisible();
-})
+});
 
-test('when game started, make the target button visible', async () => {
+test("when game started, make the target button visible", async () => {
   render(<Game />);
   // start the game
   const startButton = screen.getByText(/start game/i);
   fireEvent.click(startButton);
 
-  await waitFor(() => {
-    expect(screen.getByTestId("target")).toBeInTheDocument();
-  }, { timeout: 5000 });
+  await waitFor(
+    () => {
+      expect(screen.getByTestId("target")).toBeInTheDocument();
+    },
+    { timeout: 5000 }
+  );
   const targetButton = await screen.findByTestId("target");
   expect(targetButton).toBeVisible();
-})
+});
 
-test('when ending game, make start button clickable', async () => {
-  jest.useFakeTimers()
+test("when ending game, make start button clickable", async () => {
+  jest.useFakeTimers();
   render(<Game />);
   // start the game
   const startButton = screen.getByText("Start Game");
   fireEvent.click(startButton);
   // end the game
-  await waitFor(() => {
-    expect(screen.getByTestId("target")).toBeInTheDocument();
-  }, { timeout: 5000 });
-  
+  await waitFor(
+    () => {
+      expect(screen.getByTestId("target")).toBeInTheDocument();
+    },
+    { timeout: 5000 }
+  );
+
   const targetButton = await screen.findByTestId("target");
   fireEvent.click(targetButton);
 
   expect(startButton).not.toBeDisabled();
-  jest.useRealTimers()
-})
+  jest.useRealTimers();
+});
 
-test('measures reaction time', async () => {
+test("measures reaction time", async () => {
   jest.useFakeTimers(); // activate fake timer
 
   render(<Game />);
@@ -73,15 +85,17 @@ test('measures reaction time', async () => {
   const startButton = screen.getByText("Start Game");
   fireEvent.click(startButton); // start game
 
-
   // simulate time passing
   act(() => {
     jest.advanceTimersByTime(2000); // advance time by 2secs
   });
 
-  await waitFor(() => {
-    expect(screen.getByTestId("target")).toBeInTheDocument();
-  }, { timeout: 5000 });
+  await waitFor(
+    () => {
+      expect(screen.getByTestId("target")).toBeInTheDocument();
+    },
+    { timeout: 5000 }
+  );
   const targetButton = await screen.findByTestId("target");
   // simulate time passing
   act(() => {
@@ -99,7 +113,7 @@ test('measures reaction time', async () => {
   jest.useRealTimers(); // reset fake timer
 });
 
-test('try more games in a row', async () => {
+test("try more games in a row", async () => {
   jest.useFakeTimers(); // activate fake timer
 
   render(<Game />);
@@ -107,20 +121,24 @@ test('try more games in a row', async () => {
   const startButton = screen.getByText("Start Game");
   fireEvent.click(startButton); // start game
 
-  const targetButton = await screen.findByTestId("target", {}, { timeout: 5000 });
-
+  const targetButton = await screen.findByTestId(
+    "target",
+    {},
+    { timeout: 5000 }
+  );
 
   fireEvent.click(targetButton); // end game
-
-
 
   // 2nd game
 
   fireEvent.click(startButton); // start 2nd game
 
-  await waitFor(() => {
-    expect(screen.getByTestId("target")).toBeInTheDocument();
-  }, { timeout: 5000 });
+  await waitFor(
+    () => {
+      expect(screen.getByTestId("target")).toBeInTheDocument();
+    },
+    { timeout: 5000 }
+  );
   // simulate time passing
   act(() => {
     jest.advanceTimersByTime(2000); // advance time by 2secs
@@ -135,9 +153,9 @@ test('try more games in a row', async () => {
   expect(seconds).toBeLessThan(2.5);
 
   jest.useRealTimers(); // reset fake timer
-})
+});
 
-test('measures reaction time with 2 missclicks', async () => {
+test("measures reaction time with 2 missclicks", async () => {
   jest.useFakeTimers(); // activate fake timer
 
   render(<Game />);
@@ -145,13 +163,15 @@ test('measures reaction time with 2 missclicks', async () => {
   const startButton = screen.getByText("Start Game");
   fireEvent.click(startButton); // start game
 
-
   // get gamearea to be able to simulate missclicks
-  const gameArea = await screen.findByTestId("gameArea")
+  const gameArea = await screen.findByTestId("gameArea");
 
-  await waitFor(() => {
-    expect(screen.getByTestId("target")).toBeInTheDocument();
-  }, { timeout: 5000 });
+  await waitFor(
+    () => {
+      expect(screen.getByTestId("target")).toBeInTheDocument();
+    },
+    { timeout: 5000 }
+  );
   const targetButton = await screen.findByTestId("target");
 
   // simulate time passing
@@ -160,8 +180,8 @@ test('measures reaction time with 2 missclicks', async () => {
   });
 
   // simulate 2 missclicks
-  fireEvent.click(gameArea)
-  fireEvent.click(gameArea)
+  fireEvent.click(gameArea);
+  fireEvent.click(gameArea);
 
   fireEvent.click(targetButton); // end game
 
@@ -174,33 +194,33 @@ test('measures reaction time with 2 missclicks', async () => {
   jest.useRealTimers(); // reset fake timer
 });
 
-test('missclick text is visible', async () => {
-  
+test("missclick text is visible", async () => {
   render(<Game />);
 
   const startButton = screen.getByText("Start Game");
   fireEvent.click(startButton); // start game
 
-
   // get gamearea to be able to simulate missclicks
-  const gameArea = await screen.findByTestId("gameArea")
+  const gameArea = await screen.findByTestId("gameArea");
 
-  await waitFor(() => {
-    expect(screen.getByTestId("target")).toBeInTheDocument();
-  }, { timeout: 5000 });
-
+  await waitFor(
+    () => {
+      expect(screen.getByTestId("target")).toBeInTheDocument();
+    },
+    { timeout: 5000 }
+  );
 
   // simulate missclick
-  fireEvent.click(gameArea)
+  fireEvent.click(gameArea);
 
-  const missClickText = await screen.findByText("+0.5sec")
+  const missClickText = await screen.findByText("+0.5sec");
 
-  expect(missClickText).toBeVisible()
+  expect(missClickText).toBeVisible();
 });
 
-test('name field is visible', () => {
+test("name field is visible", () => {
   render(<Game />);
 
   const nameInput = screen.getByPlaceholderText("Input name");
-  expect(nameInput).toBeVisible()
-})
+  expect(nameInput).toBeVisible();
+});
