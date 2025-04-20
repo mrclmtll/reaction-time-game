@@ -148,13 +148,16 @@ function Game () {
 
     return (
         <>
-            <button
-                className="start-button poppins-light"
-                disabled={!gameEnded} 
-                onClick={startGame}
-            >
-                Start Game
-            </button>
+            <div>
+                <button
+                    className="start-button poppins-light"
+                    disabled={!gameEnded} 
+                    onClick={startGame}
+                >
+                    Start Game
+                </button>
+                <input className="poppins-regular name-input" placeholder="Name"></input>
+            </div>
             {
                 gameActive &&
                     <span 

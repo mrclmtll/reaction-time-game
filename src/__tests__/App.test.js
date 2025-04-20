@@ -197,3 +197,10 @@ test('missclick text is visible', async () => {
 
   expect(missClickText).toBeVisible()
 });
+
+test('name field is visible', () => {
+  render(<Game />);
+
+  const nameInput = screen.getByPlaceholderText("Name");
+  expect(nameInput).toBeVisible()
+})
