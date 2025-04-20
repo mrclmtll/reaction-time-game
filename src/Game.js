@@ -14,7 +14,7 @@ function Game () {
     const targetButton       = useRef(null)
     const gameStartTimeStamp = useRef(0)
     const missClickCount     = useRef(0)
-
+    const nameInput          = useRef();
 
     async function startGame() {
         setTargetVisible(false)
@@ -46,7 +46,11 @@ function Game () {
         
         setGameEnded(true)
         clearInterval(intervalRef.current)
-        saveHighscore("Name", timeWithPenalties)
+        
+        // only save highscore, if name was provided
+        if (nameInput.current.value) {
+            saveHighscore(nameInput.current.value, timeWithPenalties)
+        }
 
         let _highScores = await getHighscores()
         setHighscores(_highScores)
@@ -156,17 +160,17 @@ function Game () {
                 >
                     Start Game
                 </button>
-                <input className="poppins-regular name-input" placeholder="Input name"></input>
+                <input className="poppins-regular name-input" placeholder="Input name" ref={nameInput}></input>
+                {
+                    gameActive &&
+                        <span 
+                            className="poppins-light timer"
+                            data-testid="timer"
+                        >
+                            {passedTime}sec
+                        </span> 
+                }
             </div>
-            {
-                gameActive &&
-                    <span 
-                        className="poppins-light timer"
-                        data-testid="timer"
-                    >
-                        {passedTime}sec
-                    </span> 
-            }
             <div className="flex-box">
                 <div 
                     className = "game-area"
