@@ -30,6 +30,11 @@ app.get("/api/highscores", async (req, res) => {
   res.send(scores);
 });
 
+app.get("/api/names", async (req, res) => {
+  const names = await Highscore.distinct("name");
+  res.send(names);
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

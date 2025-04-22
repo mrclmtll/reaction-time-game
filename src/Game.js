@@ -8,6 +8,7 @@ function Game() {
   const [missClickNotify, setMissClickNotify] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [highscores, setHighscores] = useState([]);
+  const [availibleNames, setAvailibleNames] = useState([]);
 
   const intervalRef = useRef(null);
   const targetButton = useRef(null);
@@ -52,6 +53,9 @@ function Game() {
 
     let _highScores = await getHighscores();
     setHighscores(_highScores);
+
+    let _names = await getNames();
+    setAvailibleNames(_names);
   }
 
   async function saveHighscore(name, score) {
@@ -84,6 +88,19 @@ function Game() {
     }
   }
 
+  async function getNames() {
+    try {
+      const response = await fetch("http://localhost:4000/api/names", {
+        method: "GET",
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log("Error fething names");
+      return [];
+    }
+  }
+
   function registerMissClick(e) {
     if (!gameEnded) {
       playSound("missclick");
@@ -108,7 +125,12 @@ function Game() {
       let _highScores = await getHighscores();
       setHighscores(_highScores);
     }
+    async function _setNames() {
+      let _names = await getNames();
+      setAvailibleNames(_names);
+    }
     _setHighscores();
+    _setNames();
   }, []);
 
   useEffect(() => {
@@ -151,11 +173,21 @@ function Game() {
         >
           Start Game
         </button>
+
         <input
           className="poppins-regular name-input"
           placeholder="Input name"
+          list="names"
           ref={nameInput}
         ></input>
+        <datalist id="names">
+          {availibleNames.map((name) => {
+            console.log(name);
+
+            return <option value={name} />;
+          })}
+        </datalist>
+
         {gameActive && (
           <span className="poppins-light timer" data-testid="timer">
             {passedTime}sec
