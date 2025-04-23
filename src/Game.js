@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { VolumeX, Volume2 } from "lucide-react";
 
 function Game() {
   const [gameActive, setGameActive] = useState(false);
@@ -9,6 +10,7 @@ function Game() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [highscores, setHighscores] = useState([]);
   const [availibleNames, setAvailibleNames] = useState([]);
+  const [muted, setMuted] = useState(false);
 
   const intervalRef = useRef(null);
   const targetButton = useRef(null);
@@ -115,8 +117,10 @@ function Game() {
   }
 
   function playSound(soundName) {
-    const audio = new Audio(`/sounds/${soundName}.mp3`);
-    audio.play();
+    if (!muted) {
+      const audio = new Audio(`/sounds/${soundName}.mp3`);
+      audio.play();
+    }
   }
 
   // run on mount
@@ -165,6 +169,23 @@ function Game() {
 
   return (
     <>
+      <div>
+        {muted ? (
+          <VolumeX
+            className="volume-icon"
+            onClick={() => {
+              setMuted(false);
+            }}
+          />
+        ) : (
+          <Volume2
+            className="volume-icon"
+            onClick={() => {
+              setMuted(true);
+            }}
+          />
+        )}
+      </div>
       <div>
         <button
           className="start-button poppins-light"
