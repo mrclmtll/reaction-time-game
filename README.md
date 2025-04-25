@@ -16,8 +16,7 @@ To really understand the concept and internalize it, I will follow a **Test-Driv
 - Reaction time measurement
 - Adding 0.5sec for missclicks as kind of penalty
 - Sound effects
-- Highscore tracking (planned)
-- Mobile version (planned)
+- Highscore tracking
 - Different buttons, just one right one; missclick tracking (planned)
 
 ## 🛠️ Technologies
