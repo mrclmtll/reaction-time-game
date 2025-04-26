@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { VolumeX, Volume2 } from "lucide-react";
+import { VolumeX, Volume2, Moon, Sun } from "lucide-react";
 
 function Game() {
   const [gameActive, setGameActive] = useState(false);
@@ -11,6 +11,7 @@ function Game() {
   const [highscores, setHighscores] = useState([]);
   const [availibleNames, setAvailibleNames] = useState([]);
   const [muted, setMuted] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   const intervalRef = useRef(null);
   const targetButton = useRef(null);
@@ -182,6 +183,23 @@ function Game() {
             className="volume-icon"
             onClick={() => {
               setMuted(true);
+            }}
+          />
+        )}
+        {darkMode ? (
+          <Sun
+            className="darkmode-toggle"
+            data-testid="darkmode-toggle"
+            onClick={() => {
+              setDarkMode(false);
+            }}
+          />
+        ) : (
+          <Moon
+            className="darkmode-toggle"
+            data-testid="darkmode-toggle"
+            onClick={() => {
+              setDarkMode(true);
             }}
           />
         )}

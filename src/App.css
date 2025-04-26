@@ -184,3 +184,11 @@ box-shadow: 0 0 0.5vh black; */
   position: absolute;
   right: 37vw;
 }
+
+.darkmode-toggle {
+  height: 6vh;
+  width: 6vh;
+  margin: 1vw 2vw 1vw 1.5vw;
+  position: absolute;
+  right: 40.5vw;
+}

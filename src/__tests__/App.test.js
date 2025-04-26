@@ -224,3 +224,15 @@ test("name field is visible", () => {
   const nameInput = screen.getByPlaceholderText("Input name");
   expect(nameInput).toBeVisible();
 });
+
+test("test darkmode", () => {
+  render(<Game />);
+  const toggle = screen.getByTestId("darkmode-toggle");
+  fireEvent.click(toggle);
+
+  const bodyBackgroundColor = window.getComputedStyle(
+    document.body
+  ).backgroundColor;
+
+  expect(bodyBackgroundColor).toBe("#121212");
+});
