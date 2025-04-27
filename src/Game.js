@@ -168,6 +168,15 @@ function Game() {
     };
   }, [gameEnded, targetVisible]);
 
+  useEffect(() => {
+    if (darkMode) {
+      // set whole html to darkmode
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   return (
     <>
       <div>

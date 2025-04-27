@@ -1,3 +1,7 @@
+html.dark body {
+  background-color: #121212;
+}
+
 h1 {
   padding: 0 0 0 1vw;
   font-size: 4.3vh;

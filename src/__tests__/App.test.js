@@ -226,13 +226,10 @@ test("name field is visible", () => {
 });
 
 test("test darkmode", () => {
-  render(<Game />);
+  render(<App />);
+
   const toggle = screen.getByTestId("darkmode-toggle");
   fireEvent.click(toggle);
 
-  const bodyBackgroundColor = window.getComputedStyle(
-    document.body
-  ).backgroundColor;
-
-  expect(bodyBackgroundColor).toBe("#121212");
+  expect(document.documentElement).toHaveClass("dark");
 });
