@@ -222,6 +222,12 @@ function Game() {
           Start Game
         </button>
 
+        <div className="mode-selector">
+          <button>Classic</button>
+          <button>Order</button>
+          <button>Fakes</button>
+        </div>
+
         <input
           className="poppins-regular name-input"
           placeholder="Input name"
