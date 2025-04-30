@@ -213,7 +213,7 @@ function Game() {
           />
         )}
       </div>
-      <div>
+      <div className="flex-box">
         <button
           className="start-button poppins-light"
           disabled={!gameEnded}
@@ -223,7 +223,7 @@ function Game() {
         </button>
 
         <div className="mode-selector">
-          <button>Classic</button>
+          <button className="active">Classic</button>
           <button>Order</button>
           <button>Fakes</button>
         </div>
