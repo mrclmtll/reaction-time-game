@@ -12,6 +12,7 @@ function Game() {
   const [availibleNames, setAvailibleNames] = useState([]);
   const [muted, setMuted] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [selectedGameMode, setSelectedGameMode] = useState("classic");
 
   const intervalRef = useRef(null);
   const targetButton = useRef(null);
@@ -223,9 +224,24 @@ function Game() {
         </button>
 
         <div className="mode-selector">
-          <button className="active">Classic</button>
-          <button>Order</button>
-          <button>Fakes</button>
+          <button
+            className={selectedGameMode === "classic" ? "active" : ""}
+            onClick={() => setSelectedGameMode("classic")}
+          >
+            Classic
+          </button>
+          <button
+            className={selectedGameMode === "order" ? "active" : ""}
+            onClick={() => setSelectedGameMode("order")}
+          >
+            Order
+          </button>
+          <button
+            className={selectedGameMode === "fakes" ? "active" : ""}
+            onClick={() => setSelectedGameMode("fakes")}
+          >
+            Fakes
+          </button>
         </div>
 
         <input
