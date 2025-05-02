@@ -11,14 +11,19 @@ mongoose.connect("mongodb://127.0.0.1:27017/reactiontime");
 const HighscoreSchema = new mongoose.Schema({
   name: String,
   reaction_time: Number,
+  gamemode: String,
   date: { type: Date, default: Date.now },
 });
 
 const Highscore = mongoose.model("Highscore", HighscoreSchema);
 
 app.post("/api/highscores", async (req, res) => {
-  const { name, time } = req.body;
-  const newScore = new Highscore({ name, reaction_time: time });
+  const { name, time, gamemode } = req.body;
+  const newScore = new Highscore({
+    name,
+    reaction_time: time,
+    gamemode: gamemode,
+  });
   await newScore.save();
   console.log("saved highscore", newScore);
 
@@ -26,7 +31,11 @@ app.post("/api/highscores", async (req, res) => {
 });
 
 app.get("/api/highscores", async (req, res) => {
-  const scores = await Highscore.find().sort({ reaction_time: 1 }).limit(10);
+  const { gamemode } = req.query;
+
+  const scores = await Highscore.find({ gamemode: gamemode })
+    .sort({ reaction_time: 1 })
+    .limit(10);
   res.send(scores);
 });
 

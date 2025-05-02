@@ -55,7 +55,7 @@ function Game() {
       saveHighscore(nameInput.current.value, timeWithPenalties);
     }
 
-    let _highScores = await getHighscores();
+    let _highScores = await getHighscores(selectedGameMode);
     setHighscores(_highScores);
 
     let _names = await getNames();
@@ -69,7 +69,11 @@ function Game() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: name, time: score }),
+        body: JSON.stringify({
+          name: name,
+          time: score,
+          gamemode: selectedGameMode,
+        }),
       });
 
       const data = await response.json();
@@ -79,11 +83,14 @@ function Game() {
     }
   }
 
-  async function getHighscores() {
+  async function getHighscores(gamemode) {
     try {
-      const response = await fetch("http://localhost:4000/api/highscores", {
-        method: "GET",
-      });
+      const response = await fetch(
+        `http://localhost:4000/api/highscores?gamemode=${gamemode}`,
+        {
+          method: "GET",
+        }
+      );
       const data = await response.json();
       return data;
     } catch (error) {
@@ -125,10 +132,10 @@ function Game() {
     }
   }
 
-  // run on mount
+  // run on mount and gamemode change
   useEffect(() => {
     async function _setHighscores() {
-      let _highScores = await getHighscores();
+      let _highScores = await getHighscores(selectedGameMode);
       setHighscores(_highScores);
     }
     async function _setNames() {
@@ -137,7 +144,7 @@ function Game() {
     }
     _setHighscores();
     _setNames();
-  }, []);
+  }, [selectedGameMode]);
 
   useEffect(() => {
     if (missClickNotify) {
