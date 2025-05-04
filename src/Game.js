@@ -21,19 +21,23 @@ function Game() {
   const nameInput = useRef();
 
   async function startGame() {
-    setTargetVisible(false);
-    let delay = Math.random() * 4 * 1000; // random delay between 0 and 4 seconds (0 and 4000 ms)
-    setGameActive(true);
-    setGameEnded(false);
-    setPassedTime(0); // reset timer
-    missClickCount.current = 0;
+    if (selectedGameMode === "classic") {
+      setTargetVisible(false);
+      let delay = Math.random() * 4 * 1000; // random delay between 0 and 4 seconds (0 and 4000 ms)
+      setGameActive(true);
+      setGameEnded(false);
+      setPassedTime(0); // reset timer
+      missClickCount.current = 0;
 
-    await new Promise((r) => setTimeout(r, delay)); // wait delay seconds
+      await new Promise((r) => setTimeout(r, delay)); // wait delay seconds
 
-    setTargetVisible(true);
+      setTargetVisible(true);
 
-    var date = new Date();
-    gameStartTimeStamp.current = date.getTime();
+      var date = new Date();
+      gameStartTimeStamp.current = date.getTime();
+    } else if (selectedGameMode === "order") {
+    } else if (selectedGameMode === "fakes") {
+    }
   }
 
   async function endGame(event) {
