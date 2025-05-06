@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { VolumeX, Volume2, Moon, Sun } from "lucide-react";
 
+import ClassicGame from "./gameModes/ClassicGame/ClassicGame";
+
 function Game() {
   const [gameActive, setGameActive] = useState(false);
   const [gameEnded, setGameEnded] = useState(true);
@@ -15,7 +17,6 @@ function Game() {
   const [selectedGameMode, setSelectedGameMode] = useState("classic");
 
   const intervalRef = useRef(null);
-  const targetButton = useRef(null);
   const gameStartTimeStamp = useRef(0);
   const missClickCount = useRef(0);
   const nameInput = useRef();
@@ -151,23 +152,6 @@ function Game() {
   }, [selectedGameMode]);
 
   useEffect(() => {
-    if (missClickNotify) {
-      setTimeout(() => {
-        setMissClickNotify(false);
-      }, 1000);
-    }
-  }, [missClickNotify]);
-
-  useEffect(() => {
-    if (targetButton.current && !gameEnded) {
-      let top = Math.random() * 100;
-      let left = Math.random() * 100;
-      targetButton.current.style.top = `${top}%`;
-      targetButton.current.style.left = `${left}%`;
-    }
-  }, [gameEnded, targetVisible]);
-
-  useEffect(() => {
     if (!gameEnded && targetVisible) {
       intervalRef.current = setInterval(() => {
         setPassedTime(
@@ -281,26 +265,16 @@ function Game() {
           data-testid="gameArea"
           onClick={registerMissClick}
         >
-          {targetVisible && (
-            <button
-              ref={targetButton}
-              data-testid="target"
-              onClick={endGame}
-              className="target-button"
-            ></button>
-          )}
-          {missClickNotify && (
-            <span
-              className="poppins-light missclick-notify"
-              style={{
-                position: "absolute",
-                left: mousePosition.x,
-                top: mousePosition.y,
-                color: "red",
-              }}
-            >
-              +0.5sec
-            </span>
+          {selectedGameMode === "classic" && (
+            <ClassicGame
+              setPassedTime={setPassedTime}
+              setMissClickNotify={setMissClickNotify}
+              endGame={endGame}
+              targetVisible={targetVisible}
+              gameEnded={gameEnded}
+              missClickNotify={missClickNotify}
+              mousePosition={mousePosition}
+            />
           )}
         </div>
         <div>
