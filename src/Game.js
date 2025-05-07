@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { VolumeX, Volume2, Moon, Sun } from "lucide-react";
 
 import ClassicGame from "./gameModes/ClassicGame/ClassicGame";
+import FakesGame from "./gameModes/FakesGame/FakesGame";
 
 function Game() {
   const [gameActive, setGameActive] = useState(false);
@@ -276,6 +277,7 @@ function Game() {
               mousePosition={mousePosition}
             />
           )}
+          {selectedGameMode === "fakes" && <FakesGame />}
         </div>
         <div>
           <p className="highscore-heading poppins-extralight">Highscores</p>
