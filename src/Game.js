@@ -57,7 +57,7 @@ function Game() {
 
     // only save highscore, if name was provided
     if (nameInput.current.value) {
-      saveHighscore(nameInput.current.value, timeWithPenalties);
+      await saveHighscore(nameInput.current.value, timeWithPenalties);
     }
 
     let _highScores = await getHighscores(selectedGameMode);
