@@ -222,19 +222,28 @@ function Game() {
         <div className="mode-selector">
           <button
             className={selectedGameMode === "classic" ? "active" : ""}
-            onClick={() => setSelectedGameMode("classic")}
+            onClick={() => {
+              setSelectedGameMode("classic");
+              playSound("select");
+            }}
           >
             Classic
           </button>
           <button
             className={selectedGameMode === "order" ? "active" : ""}
-            onClick={() => setSelectedGameMode("order")}
+            onClick={() => {
+              setSelectedGameMode("order");
+              playSound("select");
+            }}
           >
             Order
           </button>
           <button
             className={selectedGameMode === "fakes" ? "active" : ""}
-            onClick={() => setSelectedGameMode("fakes")}
+            onClick={() => {
+              setSelectedGameMode("fakes");
+              playSound("select");
+            }}
           >
             Fakes
           </button>
