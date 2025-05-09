@@ -23,7 +23,7 @@ function Game() {
   const nameInput = useRef();
 
   async function startGame() {
-    if (selectedGameMode === "classic") {
+    if (selectedGameMode === "classic" || selectedGameMode === "fakes") {
       setTargetVisible(false);
       let delay = Math.random() * 4 * 1000; // random delay between 0 and 4 seconds (0 and 4000 ms)
       setGameActive(true);
@@ -38,7 +38,6 @@ function Game() {
       var date = new Date();
       gameStartTimeStamp.current = date.getTime();
     } else if (selectedGameMode === "order") {
-    } else if (selectedGameMode === "fakes") {
     }
   }
 
@@ -174,6 +173,14 @@ function Game() {
     }
   }, [darkMode]);
 
+  useEffect(() => {
+    if (missClickNotify) {
+      setTimeout(() => {
+        setMissClickNotify(false);
+      }, 1000);
+    }
+  }, [missClickNotify, setMissClickNotify]);
+
   return (
     <>
       <div>
@@ -277,16 +284,32 @@ function Game() {
         >
           {selectedGameMode === "classic" && (
             <ClassicGame
-              setPassedTime={setPassedTime}
-              setMissClickNotify={setMissClickNotify}
               endGame={endGame}
               targetVisible={targetVisible}
               gameEnded={gameEnded}
+            />
+          )}
+          {selectedGameMode === "fakes" && (
+            <FakesGame
+              endGame={endGame}
+              targetVisible={targetVisible}
               missClickNotify={missClickNotify}
               mousePosition={mousePosition}
             />
           )}
-          {selectedGameMode === "fakes" && <FakesGame />}
+          {missClickNotify && (
+            <span
+              className="poppins-light missclick-notify"
+              style={{
+                position: "absolute",
+                left: mousePosition.x,
+                top: mousePosition.y,
+                color: "red",
+              }}
+            >
+              +0.5sec
+            </span>
+          )}
         </div>
         <div>
           <p className="highscore-heading poppins-extralight">Highscores</p>

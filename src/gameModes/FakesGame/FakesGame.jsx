@@ -1,20 +1,24 @@
-function FakesGame() {
+function FakesGame({ endGame, targetVisible }) {
   return (
     <>
-      <TargetButton fake={true} />
-      <TargetButton />
-      <TargetButton />
-      <TargetButton />
+      {targetVisible && (
+        <>
+          <TargetButton fake={true} onClick={endGame} />
+          <TargetButton />
+          <TargetButton />
+          <TargetButton />
+        </>
+      )}
     </>
   );
 }
 
-function TargetButton({ fake }) {
+function TargetButton({ fake, onClick }) {
   return (
     <button
       // ref={targetButton}
       data-testid="target"
-      // onClick={endGame}
+      onClick={onClick}
       className={fake ? "fake-button" : "target-button"}
     ></button>
   );

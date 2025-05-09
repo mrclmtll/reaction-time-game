@@ -2,15 +2,11 @@ import { useEffect, useRef } from "react";
 
 function ClassicGame({
   // functions
-  setPassedTime,
-  setMissClickNotify,
   endGame,
 
   // states
   targetVisible,
   gameEnded,
-  missClickNotify,
-  mousePosition,
 }) {
   const targetButton = useRef(null);
 
@@ -23,13 +19,6 @@ function ClassicGame({
     }
   }, [gameEnded, targetVisible]);
 
-  useEffect(() => {
-    if (missClickNotify) {
-      setTimeout(() => {
-        setMissClickNotify(false);
-      }, 1000);
-    }
-  }, [missClickNotify, setMissClickNotify]);
   return (
     <>
       {targetVisible && (
@@ -39,19 +28,6 @@ function ClassicGame({
           onClick={endGame}
           className="target-button"
         ></button>
-      )}
-      {missClickNotify && (
-        <span
-          className="poppins-light missclick-notify"
-          style={{
-            position: "absolute",
-            left: mousePosition.x,
-            top: mousePosition.y,
-            color: "red",
-          }}
-        >
-          +0.5sec
-        </span>
       )}
     </>
   );
