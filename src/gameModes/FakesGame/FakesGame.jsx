@@ -1,12 +1,12 @@
-function FakesGame({ endGame, targetVisible }) {
+function FakesGame({ endGame, registerWrongTarget, targetVisible }) {
   return (
     <>
       {targetVisible && (
         <>
           <TargetButton fake={true} onClick={endGame} />
-          <TargetButton />
-          <TargetButton />
-          <TargetButton />
+          <TargetButton onClick={registerWrongTarget} />
+          <TargetButton onClick={registerWrongTarget} />
+          <TargetButton onClick={registerWrongTarget} />
         </>
       )}
     </>

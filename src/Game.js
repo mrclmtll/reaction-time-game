@@ -10,6 +10,7 @@ function Game() {
   const [passedTime, setPassedTime] = useState(0);
   const [targetVisible, setTargetVisible] = useState(false);
   const [missClickNotify, setMissClickNotify] = useState(false);
+  const [wrongTargetNotify, setWrongTargetNotify] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [highscores, setHighscores] = useState([]);
   const [availibleNames, setAvailibleNames] = useState([]);
@@ -20,6 +21,7 @@ function Game() {
   const intervalRef = useRef(null);
   const gameStartTimeStamp = useRef(0);
   const missClickCount = useRef(0);
+  const wrongTargetCount = useRef(0);
   const nameInput = useRef();
 
   async function startGame() {
@@ -49,7 +51,7 @@ function Game() {
 
     var date = new Date();
     var reactionTimeInMs = (date.getTime() - gameStartTimeStamp.current) / 1000;
-    var timeWithPenalties = reactionTimeInMs + missClickCount.current * 0.5;
+    var timeWithPenalties = reactionTimeInMs + missClickCount.current * 0.5 + wrongTargetCount.current * 1;
     setPassedTime(timeWithPenalties);
 
     setGameEnded(true);
@@ -90,12 +92,9 @@ function Game() {
 
   async function getHighscores(gamemode) {
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/highscores?gamemode=${gamemode}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch(`http://localhost:4000/api/highscores?gamemode=${gamemode}`, {
+        method: "GET",
+      });
       const data = await response.json();
       return data;
     } catch (error) {
@@ -127,6 +126,20 @@ function Game() {
       // first set to false and then reset, so it can appear even if the timer did not reset
       setMissClickNotify(false);
       setMissClickNotify(true);
+    }
+  }
+
+  function registerWrongTarget(e) {
+    if (!gameEnded) {
+      e.stopPropagation();
+      playSound("missclick");
+      setPassedTime((prev) => prev + 0.5);
+      wrongTargetCount.current += 1;
+
+      setMousePosition({ x: e.clientX, y: e.clientY });
+      // first set to false and then reset, so it can appear even if the timer did not reset
+      setWrongTargetNotify(false);
+      setWrongTargetNotify(true);
     }
   }
 
@@ -181,6 +194,14 @@ function Game() {
     }
   }, [missClickNotify, setMissClickNotify]);
 
+  useEffect(() => {
+    if (wrongTargetNotify) {
+      setTimeout(() => {
+        setWrongTargetNotify(false);
+      }, 1000);
+    }
+  }, [wrongTargetNotify, setWrongTargetNotify]);
+
   return (
     <>
       <div>
@@ -218,11 +239,7 @@ function Game() {
         )}
       </div>
       <div className="flex-box">
-        <button
-          className="start-button poppins-light"
-          disabled={!gameEnded}
-          onClick={startGame}
-        >
+        <button className="start-button poppins-light" disabled={!gameEnded} onClick={startGame}>
           Start Game
         </button>
 
@@ -256,12 +273,7 @@ function Game() {
           </button>
         </div>
 
-        <input
-          className="poppins-regular name-input"
-          placeholder="Input name"
-          list="names"
-          ref={nameInput}
-        ></input>
+        <input className="poppins-regular name-input" placeholder="Input name" list="names" ref={nameInput}></input>
         <datalist id="names">
           {availibleNames.map((name) => {
             console.log(name);
@@ -277,27 +289,12 @@ function Game() {
         )}
       </div>
       <div className="flex-box">
-        <div
-          className="game-area"
-          data-testid="gameArea"
-          onClick={registerMissClick}
-        >
-          {selectedGameMode === "classic" && (
-            <ClassicGame
-              endGame={endGame}
-              targetVisible={targetVisible}
-              gameEnded={gameEnded}
-            />
-          )}
+        <div className="game-area" data-testid="gameArea" onClick={registerMissClick}>
+          {selectedGameMode === "classic" && <ClassicGame endGame={endGame} targetVisible={targetVisible} gameEnded={gameEnded} />}
           {selectedGameMode === "fakes" && (
-            <FakesGame
-              endGame={endGame}
-              targetVisible={targetVisible}
-              missClickNotify={missClickNotify}
-              mousePosition={mousePosition}
-            />
+            <FakesGame endGame={endGame} registerWrongTarget={registerWrongTarget} targetVisible={targetVisible} missClickNotify={missClickNotify} mousePosition={mousePosition} />
           )}
-          {missClickNotify && (
+          {(missClickNotify || wrongTargetNotify) && (
             <span
               className="poppins-light missclick-notify"
               style={{
@@ -307,7 +304,8 @@ function Game() {
                 color: "red",
               }}
             >
-              +0.5sec
+              {missClickNotify && "+0.5sec"}
+              {wrongTargetNotify && "+1sec"}
             </span>
           )}
         </div>
