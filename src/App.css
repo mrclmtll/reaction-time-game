@@ -39,7 +39,7 @@ html.dark .game-area {
   box-shadow: 0 0 2vh rgb(59, 59, 59);
 }
 
-.target-button {
+.button {
   border-radius: 100%;
   position: relative;
   height: 5vw;
@@ -48,7 +48,7 @@ html.dark .game-area {
   box-shadow: 0 0 1.5vh rgb(133, 125, 125) inset;
 }
 
-.target-button:hover {
+.button:hover {
   box-shadow: 0 0 1.5vh rgb(3, 129, 129) inset;
 
   border-style: solid;

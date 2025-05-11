@@ -26,7 +26,7 @@ function ClassicGame({
           ref={targetButton}
           data-testid="target"
           onClick={endGame}
-          className="target-button"
+          className="button"
         ></button>
       )}
     </>
