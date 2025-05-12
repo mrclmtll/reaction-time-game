@@ -51,7 +51,8 @@ function Game() {
 
     var date = new Date();
     var reactionTimeInMs = (date.getTime() - gameStartTimeStamp.current) / 1000;
-    var timeWithPenalties = reactionTimeInMs + missClickCount.current * 0.5 + wrongTargetCount.current * 1;
+    var timeWithPenalties =
+      reactionTimeInMs + missClickCount.current * 0.5 + wrongTargetCount.current * 1;
     setPassedTime(timeWithPenalties);
 
     setGameEnded(true);
@@ -250,6 +251,7 @@ function Game() {
               setSelectedGameMode("classic");
               playSound("select");
             }}
+            disabled={!gameEnded}
           >
             Classic
           </button>
@@ -259,6 +261,7 @@ function Game() {
               setSelectedGameMode("order");
               playSound("select");
             }}
+            disabled={!gameEnded}
           >
             Order
           </button>
@@ -268,12 +271,18 @@ function Game() {
               setSelectedGameMode("fakes");
               playSound("select");
             }}
+            disabled={!gameEnded}
           >
             Fakes
           </button>
         </div>
 
-        <input className="poppins-regular name-input" placeholder="Input name" list="names" ref={nameInput}></input>
+        <input
+          className="poppins-regular name-input"
+          placeholder="Input name"
+          list="names"
+          ref={nameInput}
+        ></input>
         <datalist id="names">
           {availibleNames.map((name) => {
             console.log(name);
@@ -290,9 +299,17 @@ function Game() {
       </div>
       <div className="flex-box">
         <div className="game-area" data-testid="gameArea" onClick={registerMissClick}>
-          {selectedGameMode === "classic" && <ClassicGame endGame={endGame} targetVisible={targetVisible} gameEnded={gameEnded} />}
+          {selectedGameMode === "classic" && (
+            <ClassicGame endGame={endGame} targetVisible={targetVisible} gameEnded={gameEnded} />
+          )}
           {selectedGameMode === "fakes" && (
-            <FakesGame endGame={endGame} registerWrongTarget={registerWrongTarget} targetVisible={targetVisible} missClickNotify={missClickNotify} mousePosition={mousePosition} />
+            <FakesGame
+              endGame={endGame}
+              registerWrongTarget={registerWrongTarget}
+              targetVisible={targetVisible}
+              missClickNotify={missClickNotify}
+              mousePosition={mousePosition}
+            />
           )}
           {(missClickNotify || wrongTargetNotify) && (
             <span

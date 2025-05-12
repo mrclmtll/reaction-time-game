@@ -239,8 +239,8 @@ html.dark .mode-selector button {
   border-color: rgb(133, 125, 125);
 }
 
-.mode-selector button:hover,
-html.dark .mode-selector button:hover {
+.mode-selector button:not(:disabled):hover,
+html.dark .mode-selector button:not(:disabled):hover {
   height: 5.2vh;
   width: 5.2vw;
   color: rgb(3, 129, 129);
