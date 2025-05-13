@@ -309,6 +309,7 @@ function Game() {
               targetVisible={targetVisible}
               missClickNotify={missClickNotify}
               mousePosition={mousePosition}
+              gameEnded={gameEnded}
             />
           )}
           {(missClickNotify || wrongTargetNotify) && (

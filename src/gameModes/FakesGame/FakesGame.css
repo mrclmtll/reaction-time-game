@@ -1,7 +1,9 @@
 .target-button {
   background-color: greenyellow;
+  position: relative;
 }
 
 .fake-button {
   background-color: red;
+  position: relative;
 }
