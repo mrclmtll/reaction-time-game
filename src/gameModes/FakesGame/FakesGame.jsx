@@ -1,5 +1,5 @@
 import "./FakesGame.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 function FakesGame({ endGame, registerWrongTarget, targetVisible, gameEnded }) {
   const [buttonPositions, setButtonPositions] = useState([]);
