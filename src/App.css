@@ -19,6 +19,9 @@ p {
 }
 
 .game-area {
+  position: relative;
+  overflow: hidden;
+
   border-style: solid;
   border-width: 0.3vh;
   border-radius: 10px;

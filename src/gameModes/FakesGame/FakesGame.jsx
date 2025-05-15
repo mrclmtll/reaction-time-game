@@ -8,9 +8,9 @@ function FakesGame({ endGame, registerWrongTarget, targetVisible, gameEnded }) {
     if (targetVisible && !gameEnded) {
       let positions = [];
       for (let i = 0; i < 4; i++) {
-        let topPos = Math.random() * 100;
-        let leftPos = Math.random() * 100;
-        positions.push({ top: `${topPos}%`, left: `${leftPos}%` });
+        let topPos = Math.random() * 90;
+        let leftPos = Math.random() * 90;
+        positions.push({ position: "absolute", top: `${topPos}%`, left: `${leftPos}%` });
       }
       setButtonPositions(positions);
     }
