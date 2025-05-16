@@ -41,7 +41,7 @@ function TargetButton({ style, fake, onClick }) {
       data-testid="target"
       onClick={onClick}
       className={fake ? "fake-button button" : "target-button button"}
-      style={style}
+      style={fake ? style : { ...style, zIndex: 10 }}
     ></button>
   );
 }
