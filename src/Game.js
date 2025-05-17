@@ -14,9 +14,15 @@ function Game() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [highscores, setHighscores] = useState([]);
   const [availibleNames, setAvailibleNames] = useState([]);
-  const [muted, setMuted] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-  const [selectedGameMode, setSelectedGameMode] = useState("classic");
+  const [muted, setMuted] = useState(() => {
+    return localStorage.getItem("muted") === "true" ? true : false;
+  });
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true" ? true : false;
+  });
+  const [selectedGameMode, setSelectedGameMode] = useState(() => {
+    return localStorage.getItem("selectedGameMode") || "classic";
+  });
 
   const intervalRef = useRef(null);
   const gameStartTimeStamp = useRef(0);
@@ -150,6 +156,19 @@ function Game() {
       audio.play();
     }
   }
+
+  // save game mode to local storage
+  useEffect(() => {
+    localStorage.setItem("selectedGameMode", selectedGameMode);
+  }, [selectedGameMode]);
+  // save dark mode to local storage
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
+  // save muted to local storage
+  useEffect(() => {
+    localStorage.setItem("muted", muted);
+  }, [muted]);
 
   // run on mount and gamemode change
   useEffect(() => {
