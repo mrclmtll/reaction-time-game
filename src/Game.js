@@ -3,6 +3,7 @@ import { VolumeX, Volume2, Moon, Sun } from "lucide-react";
 
 import ClassicGame from "./gameModes/ClassicGame/ClassicGame";
 import FakesGame from "./gameModes/FakesGame/FakesGame";
+import OrderGame from "./gameModes/OrderGame/OrderGame";
 
 function Game() {
   const [gameActive, setGameActive] = useState(false);
@@ -321,6 +322,7 @@ function Game() {
           {selectedGameMode === "classic" && (
             <ClassicGame endGame={endGame} targetVisible={targetVisible} gameEnded={gameEnded} />
           )}
+          {selectedGameMode === "order" && <OrderGame />}
           {selectedGameMode === "fakes" && (
             <FakesGame
               endGame={endGame}
