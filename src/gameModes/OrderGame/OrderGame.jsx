@@ -1,23 +1,29 @@
+import { useEffect, useState } from "react";
 import "./OrderGame.css";
 
 function OrderGame() {
+  const [buttonStyles, setButtonStyles] = useState([]);
+
+  useEffect(() => {
+    let positions = [];
+    for (let i = 0; i < 5; i++) {
+      let topPos = Math.random() * 90;
+      let leftPos = Math.random() * 90;
+      let randomColor = cssColors[Math.floor(Math.random() * cssColors.length)];
+
+      positions.push({
+        position: "absolute",
+        top: `${topPos}%`,
+        left: `${leftPos}%`,
+        backgroundColor: randomColor,
+      });
+    }
+    setButtonStyles(positions);
+  }, []);
   return (
     <>
-      {Array.from({ length: 5 }).map((_, i) => {
-        let topPos = Math.random() * 90;
-        let leftPos = Math.random() * 90;
-        let randomColor = cssColors[Math.floor(Math.random() * cssColors.length)];
-        return (
-          <TargetButton
-            index={i + 1}
-            style={{
-              position: "absolute",
-              top: `${topPos}%`,
-              left: `${leftPos}%`,
-              backgroundColor: randomColor,
-            }}
-          />
-        );
+      {buttonStyles.map((btnStyle, index) => {
+        return <TargetButton index={index + 1} style={btnStyle} />;
       })}
     </>
   );
