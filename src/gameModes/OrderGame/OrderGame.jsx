@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./OrderGame.css";
 
-function OrderGame() {
+function OrderGame({ targetVisible }) {
   const [buttonStyles, setButtonStyles] = useState([]);
 
   useEffect(() => {
@@ -22,9 +22,10 @@ function OrderGame() {
   }, []);
   return (
     <>
-      {buttonStyles.map((btnStyle, index) => {
-        return <TargetButton index={index + 1} style={btnStyle} />;
-      })}
+      {targetVisible &&
+        buttonStyles.map((btnStyle, index) => {
+          return <TargetButton index={index + 1} style={btnStyle} />;
+        })}
     </>
   );
 }
