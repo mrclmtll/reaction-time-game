@@ -319,7 +319,9 @@ function Game() {
           {selectedGameMode === "classic" && (
             <ClassicGame endGame={endGame} targetVisible={targetVisible} gameEnded={gameEnded} />
           )}
-          {selectedGameMode === "order" && <OrderGame targetVisible={targetVisible} />}
+          {selectedGameMode === "order" && (
+            <OrderGame targetVisible={targetVisible} endGame={endGame} />
+          )}
           {selectedGameMode === "fakes" && (
             <FakesGame
               endGame={endGame}

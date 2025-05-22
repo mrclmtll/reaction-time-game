@@ -1,8 +1,22 @@
 import { useEffect, useState } from "react";
 import "./OrderGame.css";
 
-function OrderGame({ targetVisible }) {
+function OrderGame({ targetVisible, endGame }) {
   const [buttonStyles, setButtonStyles] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  function handleClick(event) {
+    const clickedIndex = parseInt(event.currentTarget.dataset.index, 10);
+    if (clickedIndex === currentIndex) {
+      event.stopPropagation();
+
+      event.currentTarget.disabled = true;
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+      if (currentIndex === 4) {
+        endGame(event);
+      }
+    }
+  }
 
   useEffect(() => {
     let positions = [];
@@ -24,16 +38,16 @@ function OrderGame({ targetVisible }) {
     <>
       {targetVisible &&
         buttonStyles.map((btnStyle, index) => {
-          return <TargetButton index={index + 1} style={btnStyle} />;
+          return <TargetButton index={index} style={btnStyle} handleClick={handleClick} />;
         })}
     </>
   );
 }
 
-function TargetButton({ style, index }) {
+function TargetButton({ style, index, handleClick }) {
   return (
-    <button style={style} className="button">
-      {index}
+    <button style={style} onClick={handleClick} className="button" data-index={index}>
+      {index + 1}
     </button>
   );
 }
